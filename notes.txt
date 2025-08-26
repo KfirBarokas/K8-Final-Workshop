@@ -1,3 +1,10 @@
+Install:
+docker
+minikube
+minikube nginx-ingress (https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/)
+
+need to login with ECR to docker to be able to pull the images using the deployment
+
 
 How to locally check wordpress 
 exposed wordpress on 80
@@ -8,3 +15,5 @@ port-forwarded wordpress svc to 8080
 
 ssh tunnel from port 80 to 8080
 ssh -i ~/Desktop/kfir-key.pem -L 80:localhost:8080 ec2-user@3.83.40.228
+
+kubectl describe ingress/wordpress-ingress
