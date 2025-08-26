@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+  replicas: 2 
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+      - name: wordpress
+        image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/kfirrepo:wordpress
+        ports:
+        - containerPort: 80
+      imagePullSecrets: # Need to login to docker & create a secret (https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
+      - name: regcred 
