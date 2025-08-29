@@ -7,7 +7,7 @@ metadata:
     app: mariadb
 spec:
   ports:
-    - port: 4000
+    - port: 3306
       name: database
   clusterIP: None
   selector:
@@ -36,7 +36,7 @@ spec:
         - name: mariadb
           image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/kfirrepo:mariadb
           ports:
-            - containerPort: 4000
+            - containerPort: 3306
               name: database
           volumeMounts:
             - name: data
@@ -44,6 +44,12 @@ spec:
           env:
             - name: MARIADB_ROOT_PASSWORD
               value: kfir
+            - name: MARIADB_USER
+              value: kfir
+            - name: MARIADB_PASSWORD
+              value: kfir
+            - name: MARIADB_DATABASE
+              value: db
   volumeClaimTemplates:
     - metadata:
         name: data

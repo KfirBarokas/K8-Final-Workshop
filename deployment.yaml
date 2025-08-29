@@ -17,5 +17,14 @@ spec:
         image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/kfirrepo:wordpress
         ports:
         - containerPort: 80
+        env:
+          - name: WORDPRESS_DB_HOST
+            value: "database"
+          - name: WORDPRESS_DB_USER
+            value: "kfir"
+          - name: WORDPRESS_DB_PASSWORD
+            value: "kfir"
+          - name: WORDPRESS_DB_NAME
+            value: "db"
       imagePullSecrets: # Need to login to docker & create a secret (https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
-      - name: regcred 
+      - name: regcred
