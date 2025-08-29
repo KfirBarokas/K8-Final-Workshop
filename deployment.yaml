@@ -19,7 +19,7 @@ spec:
         - containerPort: 80
         env:
           - name: WORDPRESS_DB_HOST
-            value: "database"
+            value: "mariadb.default.svc.cluster.local"
           - name: WORDPRESS_DB_USER
             value: "kfir"
           - name: WORDPRESS_DB_PASSWORD
