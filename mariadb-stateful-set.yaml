@@ -29,6 +29,8 @@ spec:
       labels:
         app: mariadb  # has to match .spec.selector.matchLabels
     spec:
+      imagePullSecrets:
+        - name: regcred
       terminationGracePeriodSeconds: 10
       containers:
         - name: mariadb
@@ -39,6 +41,9 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/lib/mysql
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              value: kfir
   volumeClaimTemplates:
     - metadata:
         name: data
