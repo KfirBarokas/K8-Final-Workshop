@@ -1,0 +1,51 @@
+# headless service, responsible for network identity of pods
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+  labels:
+    app: mariadb
+spec:
+  ports:
+    - port: 4000
+      name: database
+  clusterIP: None
+  selector:
+    app: mariadb
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: database
+spec:
+  selector:
+    matchLabels:
+      app: mariadb  # has to match .spec.template.metadata.labels
+  serviceName: "mariadb"
+  replicas: 3  # by default is 1
+  minReadySeconds: 10  # by default is 0
+  template:
+    metadata:
+      labels:
+        app: mariadb  # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mariadb
+          image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/kfirrepo:mariadb
+          ports:
+            - containerPort: 4000
+              name: database
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: 
+          - ReadWriteOnce
+        storageClassName: "standard" # default storage class
+        resources:
+          requests:
+            storage: 1Gi
